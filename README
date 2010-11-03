@@ -1,0 +1,16 @@
+A TiddlyWeb plugin for providing unauthed access to private resources
+using "unguessable" URIs.
+
+A URI at a uuid provides an id for a mapping to another URI, internal
+to the tiddlyweb server, with the active user being "faked".
+
+This works out okay because:
+* only GET is supported
+* there's no state that gets carried to the next request
+
+The open question is how to maintain the mappings. Is it in some
+kind of persistent store? How are things added to that store? 
+Or is some kind of encryption? The latter seems less secure because
+it would make things guessable.
+
+
