@@ -11,6 +11,7 @@ import urlparse
 import uuid
 
 from tiddlyweb.model.tiddler import Tiddler
+from tiddlyweb.model.user import User
 from tiddlyweb.store import StoreError
 from tiddlyweb.web.http import HTTP404, HTTP400, HTTP302
 from tiddlyweb.web.query import Query
@@ -110,4 +111,10 @@ def _map_to_uri(environ, identifier):
 
 
 def _proxy_user(environ, username):
-    return {'name': username, 'roles': []}
+    store = environ['tiddlyweb.store']
+    try:
+        user = User(username)
+        user = store.get(user)
+        return {'name': user.usersign, 'roles': user.list_roles()}
+    except StoreError, exc:
+        raise HTTP400('invalid mapping: %s' % exc)
