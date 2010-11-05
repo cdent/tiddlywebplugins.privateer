@@ -35,7 +35,7 @@ Copyright 2010 Chris Dent <cdent@peemore.com>
 Licensed as TiddlyWeb, using the BSD License.
 """
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 import simplejson
 import urlparse
