@@ -38,6 +38,12 @@ def setup_module(module):
 
     module.authorization = b64encode('cdent:cowpoo')
 
+    user = User('fnd')
+    user.set_password('whitespace')
+    store.put(user)
+
+    module.other_auth = b64encode('fnd:whitespace')
+
     bag = Bag('ho')
     bag.policy.read = ['cdent']
     store.put(bag)
@@ -71,6 +77,20 @@ def test_basic_tiddler():
 
     response, content = http.request('http://a.0.0.0.0:8080/_/nonono')
     assert response['status'] == '404'
+
+    response, content = http.request(location, method='DELETE')
+    assert response['status'] == '403', content
+
+    response, content = http.request(location, method='DELETE',
+            headers={'Authorization': 'Basic %s' % other_auth})
+    assert response['status'] == '404', content
+
+    response, content = http.request(location, method='DELETE',
+            headers={'Authorization': 'Basic %s' % authorization})
+    assert response['status'] == '204', content
+
+    response, content = http.request(location)
+    assert response['status'] == '404', content
 
 
 def test_with_query():

@@ -25,6 +25,25 @@ POLICY = dict(read=['NONE'], write=['NONE'], create=['NONE'],
         manage=['NONE'], accept=['NONE'])
 
 
+@require_any_user()
+def delete_mapping(environ, start_response):
+    identifier = environ['wsgiorg.routing_args'][1]['identifier']
+    current_user = environ['tiddlyweb.usersign']['name']
+    store = environ['tiddlyweb.store']
+    try:
+        tiddler = Tiddler(identifier, MAPPING_BAG)
+        tiddler = store.get(tiddler)
+        tiddler_user = tiddler.fields['user']
+        if current_user != tiddler_user:
+            raise HTTP404('resource unavailable') # obscure user mismatch
+        store.delete(tiddler)
+    except StoreError, exc:
+        raise HTTP404('resource not found')
+
+    start_response('204 No Content', [])
+    return []
+
+
 def map_to_private(environ, start_response):
     identifier = environ['wsgiorg.routing_args'][1]['identifier']
     host, target_uri, user = _map_to_uri(environ, identifier)
@@ -78,7 +97,7 @@ def make_mapping(environ, start_response):
 def init(config):
     if 'selector' in config:
         config['selector'].add('/_/{identifier:segment}',
-                GET=map_to_private)
+                GET=map_to_private, DELETE=delete_mapping)
         config['selector'].add('/_', POST=make_mapping)
 
 
