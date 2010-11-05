@@ -1,10 +1,41 @@
 """
-Public access to private things via unguessable URIs.
+A TiddlyWeb plugin for providing unauthed access to private resources
+using "unguessable" URIs.
 
-Maintain a mapping between uuids and a proper URI + user.
+A URI at a uuid provides an id for a mapping to another URI, internal
+to the tiddlyweb server, with the active user being "faked".
 
-Access the URI as that user.
+This works out okay because:
+* only GET is supported
+* there's no state that gets carried to the next request
+
+Tiddlers in a bag called PRIVATEER are used to maintain the mappings.
+The title of the tiddler is the uuid. The tiddler has two fields:
+
+* uri: the mapped to uri
+* user: the user to proxy the action as
+
+An authenticated user can create a new mapping by making a POST
+to /_ as either a JSON dictionary with a 'uri' key, or a CGI form
+with a uri parameter.
+
+URIs are not checked, you can store what you like and the system
+will happily do the internal redirect to it. If junk is stored, a
+404 will result.
+
+An authenticated user can list their own mappings by doing a GET to
+/_. A JSON dictionary of mappings to uris is returned. Only those
+mappings which have a user that matches the currently active user
+will be shown.
+
+A user can delete a mapping by sending DELETE to the URI.
+
+Copyright 2010 Chris Dent <cdent@peemore.com>
+
+Licensed as TiddlyWeb, using the BSD License.
 """
+
+__version__ = '0.1'
 
 import simplejson
 import urlparse
