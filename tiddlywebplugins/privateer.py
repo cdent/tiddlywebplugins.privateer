@@ -184,6 +184,7 @@ def map_to_private(environ, start_response):
     if host:
         environ['HTTP_HOST'] = host.encode('utf-8')
     environ['PATH_INFO'] = target_uri.encode('utf-8')
+    environ['SCRIPT_NAME'] = ''
     # reparse the query string into tiddlyweb.query and filters
     Query(None).extract_query(environ)
     Negotiate(None).figure_type(environ)
@@ -221,7 +222,7 @@ def _map_to_uri(environ, identifier):
         uri = tiddler.fields['uri']
         user = tiddler.fields['user']
         scheme, netloc, path, params, query, fragment = urlparse.urlparse(uri)
-        host = urlparse.urlunparse((scheme, netloc, '', '', '', ''))
+        host = netloc
         path = urlparse.urlunparse(('', '', path, params, query, fragment))
         return host, path, user
     except (StoreError, KeyError), exc:
