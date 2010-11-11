@@ -35,7 +35,7 @@ Copyright 2010 Chris Dent <cdent@peemore.com>
 Licensed as TiddlyWeb, using the BSD License.
 """
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 import simplejson
 import urlparse
@@ -151,7 +151,7 @@ def mapping_list(environ, start_response):
                 'select=user:%s' % current_user, environ=environ)
         results = {}
         for tiddler in tiddlers:
-            store.get(tiddler)
+            tiddler = store.get(tiddler)
             results[_mapping_uri(environ,
                 tiddler.title)] = tiddler.fields['uri']
     except StoreError, exc:

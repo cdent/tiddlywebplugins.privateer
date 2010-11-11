@@ -2,7 +2,7 @@ AUTHOR = 'Chris Dent'
 AUTHOR_EMAIL = 'cdent@peermore.com'
 NAME = 'tiddlywebplugins.privateer'
 DESCRIPTION = 'Public access to private things.'
-VERSION = '0.3'
+VERSION = '0.4'
 
 
 import os
