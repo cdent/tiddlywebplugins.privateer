@@ -35,7 +35,7 @@ Copyright 2010 Chris Dent <cdent@peemore.com>
 Licensed as TiddlyWeb, using the BSD License.
 """
 
-__version__ = '0.4'
+__version__ = '0.5'
 
 import simplejson
 import urlparse
@@ -48,7 +48,7 @@ from tiddlyweb.model.user import User
 from tiddlyweb.store import StoreError
 from tiddlyweb.web.http import HTTP404, HTTP400
 from tiddlyweb.web.query import Query
-from tiddlyweb.web.negotiate import Negotiate
+from tiddlyweb.web.negotiate import figure_type
 from tiddlyweb.web.util import server_base_url
 
 from tiddlywebplugins.utils import require_any_user, ensure_bag
@@ -187,7 +187,7 @@ def map_to_private(environ, start_response):
     environ['SCRIPT_NAME'] = ''
     # reparse the query string into tiddlyweb.query and filters
     Query(None).extract_query(environ)
-    Negotiate(None).figure_type(environ)
+    figure_type(environ)
     return environ['tiddlyweb.config']['selector'](environ, start_response)
 
 

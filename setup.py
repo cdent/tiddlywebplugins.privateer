@@ -2,7 +2,7 @@ AUTHOR = 'Chris Dent'
 AUTHOR_EMAIL = 'cdent@peermore.com'
 NAME = 'tiddlywebplugins.privateer'
 DESCRIPTION = 'Public access to private things.'
-VERSION = '0.4'
+VERSION = '0.5'
 
 
 import os
@@ -22,7 +22,7 @@ setup(
     platforms = 'Posix; MacOS X; Windows',
     packages = find_packages(exclude=['test']),
     install_requires = ['setuptools',
-        'tiddlyweb',
+        'tiddlyweb>=1.2.49',
         'simplejson',
         'tiddlywebplugins.utils'],
     zip_safe = False
