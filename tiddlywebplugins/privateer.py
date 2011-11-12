@@ -221,7 +221,7 @@ def _map_to_uri(environ, identifier):
         tiddler = store.get(tiddler)
         uri = tiddler.fields['uri']
         user = tiddler.fields['user']
-        scheme, netloc, path, params, query, fragment = urlparse.urlparse(uri)
+        _, netloc, path, params, query, fragment = urlparse.urlparse(uri)
         host = netloc
         path = urlparse.urlunparse(('', '', path, params, query, fragment))
         return host, path, user
