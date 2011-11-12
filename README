@@ -27,8 +27,4 @@ An authenticated user can list their own mappings by doing a GET to
 mappings which have a user that matches the currently active user
 will be shown.
 
-A user can delete a mapping by sending DELETE to the URI.
-
-Copyright 2010 Chris Dent <cdent@peemore.com>
-
-Licensed as TiddlyWeb, using the BSD License.
+A user can delete their own mapping by sending DELETE to the URI.
