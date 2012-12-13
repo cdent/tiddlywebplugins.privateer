@@ -35,18 +35,19 @@ Copyright 2010 Chris Dent <cdent@peemore.com>
 Licensed as TiddlyWeb, using the BSD License.
 """
 
-__version__ = '0.6'
+__version__ = '0.7'
 
 import simplejson
 import urlparse
 import uuid
+
+from httpexceptor import HTTP404, HTTP400
 
 from tiddlyweb.control import filter_tiddlers
 from tiddlyweb.model.bag import Bag
 from tiddlyweb.model.tiddler import Tiddler
 from tiddlyweb.model.user import User
 from tiddlyweb.store import StoreError
-from tiddlyweb.web.http import HTTP404, HTTP400
 from tiddlyweb.web.query import Query
 from tiddlyweb.web.negotiate import figure_type
 from tiddlyweb.web.util import server_base_url
